@@ -1,4 +1,4 @@
-package vo.project.inventory.servives.impl;
+package vo.project.inventory.services.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import vo.project.inventory.domain.Area;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.repositories.AreaRepository;
-import vo.project.inventory.servives.AreaService;
+import vo.project.inventory.services.AreaService;
 
 import java.util.UUID;
 

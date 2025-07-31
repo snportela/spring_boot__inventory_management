@@ -9,7 +9,7 @@ import org.springframework.data.domain.*;
 import vo.project.inventory.domain.Area;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.repositories.AreaRepository;
-import vo.project.inventory.servives.impl.AreaServiceImpl;
+import vo.project.inventory.services.impl.AreaServiceImpl;
 import vo.project.inventory.util.AreaData;
 
 import java.util.*;
