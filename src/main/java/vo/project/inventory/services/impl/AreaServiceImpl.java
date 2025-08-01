@@ -2,6 +2,7 @@ package vo.project.inventory.services.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vo.project.inventory.domain.Area;
 import vo.project.inventory.exceptions.NotFoundException;
@@ -25,8 +26,8 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public Page<Area> findAll(Pageable pageable) {
-        return areaRepository.findAll(pageable);
+    public Page<Area> findAll(Specification<Area> spec, Pageable pageable) {
+        return areaRepository.findAll(spec, pageable);
     }
 
     @Override
