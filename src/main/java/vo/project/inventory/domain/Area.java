@@ -25,20 +25,19 @@ public class Area {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "area_id", columnDefinition = "uuid", updatable = false, nullable = false)
+    @Column(name = "area_id")
     private UUID areaId;
 
-    @Column(nullable = false)
     private String name;
 
     @CreationTimestamp
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    @Column(name = "created_at")
     private Instant createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
+    @Column(name = "deleted_at")
     private Instant deletedAt;
 }

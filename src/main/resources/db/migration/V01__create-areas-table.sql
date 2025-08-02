@@ -1,9 +1,9 @@
 CREATE TABLE areas (
     area_id uuid DEFAULT gen_random_uuid() NOT NULL,
     name varchar(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT TIMEZONE('UTC', NOW()),
-    updated_at TIMESTAMP DEFAULT TIMEZONE('UTC', NOW()),
-    deleted_at TIMESTAMP,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ,
 
     CONSTRAINT areas_pk PRIMARY KEY (area_id)
 );
