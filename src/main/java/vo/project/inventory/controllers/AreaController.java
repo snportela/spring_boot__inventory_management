@@ -60,7 +60,7 @@ public class AreaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AreaDto> updateArea(
-            @PathVariable("id") UUID areaId, @RequestBody AreaDto areaDto
+            @PathVariable("id") UUID areaId, @Valid @RequestBody AreaDto areaDto
     ) {
         Area updatedArea = areaService.update(areaId, areaMapper.dtoToArea(areaDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(areaMapper.areaToDto(updatedArea));
