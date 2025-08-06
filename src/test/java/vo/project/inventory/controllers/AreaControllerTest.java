@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,8 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = InventoryApplication.class)
 @AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application-test.properties")
 public class AreaControllerTest {
 
     @Autowired
@@ -78,7 +75,7 @@ public class AreaControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.is("{name=Name is required}")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.is("{name=Area name is required}")));
     }
 
     @Test
@@ -102,10 +99,9 @@ public class AreaControllerTest {
     }
 
     @Test
-    public void AreaController_GetArea_ReturnAreaDto() throws Exception {
+    public void AreaController_GetArea_ReturnArea() throws Exception {
         UUID areaId = UUID.fromString("a1b2c3d4-e5f6-7890-1234-567890abcdef");
-        Area areaA = Area.builder().areaId(areaId).name("engenharia").build();
-        areaA.setAreaId(areaId);
+        Area areaA = Area.builder().areaId(areaId).areaId(areaId).name("engenharia").build();
 
         when(areaService.findOne(areaId)).thenReturn(areaA);
 
@@ -120,7 +116,7 @@ public class AreaControllerTest {
     }
 
     @Test
-    public void AreaController_UpdateArea_ReturnAreaDto() throws Exception {
+    public void AreaController_UpdateArea_ReturnArea() throws Exception {
         UUID areaId = UUID.fromString("a1b2c3d4-e5f6-7890-1234-567890abcdef");
         Area areaA = Area.builder().areaId(areaId).name("engenharia").build();
         areaA.setAreaId(areaId);
