@@ -32,6 +32,8 @@ public class AreaServiceTest {
     @InjectMocks
     private AreaServiceImpl areaService;
 
+    UUID areaId = UUID.randomUUID();
+
     @Test
     void AreaService_CreateArea_ReturnCreated() {
         Area area = Area.builder().name("engenharia").build();
@@ -63,7 +65,6 @@ public class AreaServiceTest {
 
     @Test
     void AreaService_GetArea_ReturnArea() {
-        UUID areaId = UUID.fromString("a1b2c3d4-e5f6-7890-1234-567890abcdef");
         Area area = Area.builder().areaId(areaId).name("engenharia").build();
 
         when(areaRepository.findById(areaId)).thenReturn(Optional.of(area));
@@ -83,7 +84,6 @@ public class AreaServiceTest {
 
     @Test
     void AreaService_UpdateArea_ReturnArea() {
-        UUID areaId = UUID.fromString("a1b2c3d4-e5f6-7890-1234-567890abcdef");
         Area area = Area.builder().areaId(areaId).name("engenharia").build();
 
         when(areaRepository.findById(areaId)).thenReturn(Optional.of(area));
@@ -99,7 +99,6 @@ public class AreaServiceTest {
 
     @Test
     void AreaService_DeleteArea_ReturnVoid() {
-        UUID areaId = UUID.fromString("a1b2c3d4-e5f6-7890-1234-567890abcdef");
         Area area = Area.builder().areaId(areaId).name("engenharia").build();
 
         when(areaRepository.findById(areaId)).thenReturn(Optional.of(area));
