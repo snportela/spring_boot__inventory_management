@@ -35,6 +35,8 @@ public class CategoryServiceTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
+    UUID categoryId = UUID.randomUUID();
+
     @Test
     void CategoryService_CreateCategory_ReturnCategory() {
         Category category = Category.builder().name("livro").build();
@@ -66,7 +68,6 @@ public class CategoryServiceTest {
 
     @Test
     void CategoryService_GetCategory_ReturnCategory() {
-        UUID categoryId = UUID.fromString("3d77b4cc-e414-4286-8cc3-cc9716255e6d");
         Category category = Category.builder().categoryId(categoryId).name("livro").build();
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
@@ -86,7 +87,6 @@ public class CategoryServiceTest {
 
     @Test
     void CategoryService_UpdateCategory_ReturnCategory() {
-        UUID categoryId = UUID.fromString("3d77b4cc-e414-4286-8cc3-cc9716255e6d");
         Category category = Category.builder().categoryId(categoryId).name("livro").build();
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
@@ -101,7 +101,6 @@ public class CategoryServiceTest {
 
     @Test
     void CategoryService_DeleteCategory_ReturnVoid() {
-        UUID categoryId = UUID.fromString("3d77b4cc-e414-4286-8cc3-cc9716255e6d");
         Category category = Category.builder().categoryId(categoryId).name("livro").build();
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
