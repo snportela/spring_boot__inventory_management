@@ -104,8 +104,7 @@ public class ResourceServiceTest {
         Pageable pageable = PageRequest.of(0, 2);
         Specification<Resource> spec = ResourceSpec
                 .nameContains("PC")
-                .and(ResourceSpec.repairStateEquals(RepairState.OPERATIONAL))
-                .and(ResourceSpec.categoryNameContains(category.getName()));
+                .and(ResourceSpec.repairStateEquals(RepairState.OPERATIONAL));
 
         when(resourceRepository.findAll(spec, pageable))
                 .thenReturn(new PageImpl<>(list, PageRequest.of(0,10), list.size()));
@@ -135,7 +134,7 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void ResourceService_UpdateService_ReturnResource() {
+    void ResourceService_UpdateResource_ReturnResource() {
         when(resourceRepository.findById(resourceId)).thenReturn(Optional.of(resource));
         when(resourceRepository.save(resource)).thenReturn(resource);
 

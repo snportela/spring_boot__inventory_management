@@ -141,7 +141,7 @@ public class ResourceControllerTest {
     }
 
     @Test
-    void ResourceController_GetResource_ReturnCategory() throws Exception {
+    void ResourceController_GetResource_ReturnResource() throws Exception {
         when(resourceService.findOne(resourceId)).thenReturn(resource);
 
         this.mockMvc.perform(get("/api/resources/" + resourceId)

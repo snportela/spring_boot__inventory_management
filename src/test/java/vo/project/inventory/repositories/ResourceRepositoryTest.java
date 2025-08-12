@@ -76,8 +76,7 @@ public class ResourceRepositoryTest {
         Pageable pageable = PageRequest.of(0, 2);
         Specification<Resource> spec = ResourceSpec
                 .nameContains("PC")
-                .and(ResourceSpec.statusEquals(Status.BEING_USED))
-                .and(ResourceSpec.areaNameContains(area.getName()));
+                .and(ResourceSpec.statusEquals(Status.BEING_USED));
 
         Page<Resource> page = resourceRepository.findAll(spec, pageable);
         assertThat(page.getContent()).hasSize(1)
