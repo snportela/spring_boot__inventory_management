@@ -15,15 +15,7 @@ public class ResourceSpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(name)) return null;
 
-            return builder.like(root.get("name"), "%" + name + "%");
-        };
-    }
-
-    public static Specification<Resource> areaNameContains(String areaName) {
-        return (root, query, builder) -> {
-            if(ObjectUtils.isEmpty(areaName)) return null;
-
-            return builder.like(root.get("area").get("name"), "%" + areaName + "%");
+            return builder.like(builder.lower(root.get("name")), "%" + name.toLowerCase() + "%");
         };
     }
 
@@ -31,15 +23,7 @@ public class ResourceSpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(areaId)) return null;
 
-            return builder.equal(root.get("area").get("area_id"), areaId);
-        };
-    }
-
-    public static Specification<Resource> categoryNameContains(String categoryName) {
-        return (root, query, builder) -> {
-            if(ObjectUtils.isEmpty(categoryName)) return null;
-
-            return builder.like(root.get("category").get("name"), "%" + categoryName + "%");
+            return builder.equal(root.get("area").get("areaId"), areaId);
         };
     }
 
@@ -47,7 +31,7 @@ public class ResourceSpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(categoryId)) return null;
 
-            return builder.equal(root.get("category_id"), categoryId);
+            return builder.equal(root.get("category").get("categoryId"), categoryId);
         };
     }
 
@@ -55,7 +39,7 @@ public class ResourceSpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(repairState)) return null;
 
-            return builder.equal(root.get("repair_state"), repairState);
+            return builder.equal(root.get("repairState"), repairState);
         };
     }
 
@@ -71,7 +55,7 @@ public class ResourceSpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(useTime)) return null;
 
-            return builder.equal(root.get("use_time"), useTime);
+            return builder.equal(root.get("useTime"), useTime);
         };
     }
 }
