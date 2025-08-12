@@ -38,7 +38,7 @@ public class ResourceController {
 
         Map<String, Object> response = new HashMap<>();
 
-        response.put("users", resourceList.getContent().stream().map(resourceMapper::resourceToDto).collect(Collectors.toList()));
+        response.put("resources", resourceList.getContent().stream().map(resourceMapper::resourceToDto).collect(Collectors.toList()));
         response.put("currentPage", resourceList.getNumber());
         response.put("totalItems", resourceList.getTotalElements());
         response.put("totalPages", resourceList.getTotalPages());
