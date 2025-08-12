@@ -38,7 +38,7 @@ public class AreaController {
 
         Map<String, Object> response = new HashMap<>();
 
-        response.put("users", areaList.getContent().stream().map(areaMapper::areaToDto).collect(Collectors.toList()));
+        response.put("areas", areaList.getContent().stream().map(areaMapper::areaToDto).collect(Collectors.toList()));
         response.put("currentPage", areaList.getNumber());
         response.put("totalItems", areaList.getTotalElements());
         response.put("totalPages", areaList.getTotalPages());
