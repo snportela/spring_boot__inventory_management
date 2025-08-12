@@ -10,7 +10,7 @@ public class CategorySpec {
         return (root, query, builder) -> {
             if(ObjectUtils.isEmpty(name)) return null;
 
-            return builder.like(root.get("name"), "%" + name + "%");
+            return builder.like(builder.lower(root.get("name")), "%" + name.toLowerCase() + "%");
         };
     }
 }
