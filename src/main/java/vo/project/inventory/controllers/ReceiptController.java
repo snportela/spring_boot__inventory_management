@@ -1,21 +1,16 @@
 package vo.project.inventory.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vo.project.inventory.domain.Receipt;
 import vo.project.inventory.dtos.ReceiptDto;
-import vo.project.inventory.mappers.ReceiptMapper;
 import vo.project.inventory.services.ReceiptService;
 import vo.project.inventory.specifications.ReceiptSpec;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/receipts")
@@ -23,40 +18,29 @@ public class ReceiptController {
 
     private final ReceiptService receiptService;
 
-    private final ReceiptMapper receiptMapper;
 
-    public ReceiptController(ReceiptService receiptService, ReceiptMapper receiptMapper) {
+    public ReceiptController(ReceiptService receiptService) {
         this.receiptService = receiptService;
-        this.receiptMapper = receiptMapper;
     }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> listReceipts(
             @RequestParam(required = false) String supplier, Pageable pageable) {
 
-        Page<Receipt> receiptList = receiptService.findAll(ReceiptSpec.supplierNameContains(supplier), pageable);
-
-        Map<String, Object> response = new HashMap<>();
-
-        response.put("totalItems", receiptList.getTotalElements());
-        response.put("totalPages", receiptList.getTotalPages());
-        response.put("receipts", receiptList.getContent().stream().map(receiptMapper::receiptToDto).collect(Collectors.toList()));
-        response.put("currentPage", receiptList.getNumber());
-
-
+        Map<String, Object> response = receiptService.findAll(ReceiptSpec.supplierNameContains(supplier), pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReceiptDto> getReceipt(@PathVariable("id") UUID receiptId) {
-        Receipt foundReceipt = receiptService.findOne(receiptId);
-        return ResponseEntity.status(HttpStatus.OK).body(receiptMapper.receiptToDto(foundReceipt));
+        ReceiptDto foundReceipt = receiptService.findOne(receiptId);
+        return ResponseEntity.status(HttpStatus.OK).body(foundReceipt);
     }
 
     @PostMapping
     public ResponseEntity<ReceiptDto> createReceipt(@Valid @RequestBody ReceiptDto receiptDto) {
-        Receipt savedReceipt = receiptService.save(receiptMapper.dtoToReceipt(receiptDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(receiptMapper.receiptToDto(savedReceipt));
+        ReceiptDto savedReceipt = receiptService.save(receiptDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedReceipt);
     }
 
     @PutMapping("/{id}")
@@ -64,8 +48,8 @@ public class ReceiptController {
             @PathVariable("id") UUID receiptId,
             @Valid @RequestBody ReceiptDto receiptDto
     ) {
-        Receipt updatedReceipt = receiptService.update(receiptId, receiptMapper.dtoToReceipt(receiptDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(receiptMapper.receiptToDto(updatedReceipt));
+        ReceiptDto updatedReceipt = receiptService.update(receiptId, receiptDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedReceipt);
     }
 
     @DeleteMapping("/{id}")
