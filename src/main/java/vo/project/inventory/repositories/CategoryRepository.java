@@ -7,4 +7,6 @@ import vo.project.inventory.domain.Category;
 import java.util.UUID;
 
 public interface CategoryRepository extends JpaRepository<Category, UUID>, JpaSpecificationExecutor<Category> {
+
+    boolean existsCategoryByName(String name);
 }
