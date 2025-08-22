@@ -1,21 +1,22 @@
 package vo.project.inventory.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import vo.project.inventory.domain.Receipt;
+import vo.project.inventory.dtos.ReceiptDto;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface ReceiptService {
 
-    Receipt save(Receipt receipt);
+    ReceiptDto save(ReceiptDto receiptDto);
 
-    Page<Receipt> findAll(Specification<Receipt> spec, Pageable pageable);
+    Map<String, Object> findAll(Specification<Receipt> spec, Pageable pageable);
 
-    Receipt findOne(UUID receiptId);
+    ReceiptDto findOne(UUID receiptId);
 
-    Receipt update(UUID receiptId, Receipt receipt);
+    ReceiptDto update(UUID receiptId, ReceiptDto receiptDto);
 
     void delete(UUID receiptId);
 }
