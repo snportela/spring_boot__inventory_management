@@ -1,21 +1,22 @@
 package vo.project.inventory.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import vo.project.inventory.domain.Category;
+import vo.project.inventory.dtos.CategoryDto;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface CategoryService {
 
-    Category save(Category category);
+    CategoryDto save(CategoryDto categoryDto);
 
-    Page<Category> findAll(Specification<Category> spec, Pageable pageable);
+    Map<String, Object> findAll(Specification<Category> spec, Pageable pageable);
 
-    Category findOne(UUID categoryId);
+    CategoryDto findOne(UUID categoryId);
 
-    Category update(UUID categoryId, Category category);
+    CategoryDto update(UUID categoryId, CategoryDto categoryDto);
 
     void delete(UUID categoryId);
 }
