@@ -5,53 +5,79 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vo.project.inventory.domain.Resource;
+import vo.project.inventory.dtos.ResourceDto;
 import vo.project.inventory.exceptions.NotFoundException;
+import vo.project.inventory.mappers.AreaMapper;
+import vo.project.inventory.mappers.CategoryMapper;
+import vo.project.inventory.mappers.ResourceMapper;
 import vo.project.inventory.repositories.ResourceRepository;
 import vo.project.inventory.services.ResourceService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceRepository resourceRepository;
+    private final ResourceMapper resourceMapper;
+    private final AreaMapper areaMapper;
+    private final CategoryMapper categoryMapper;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository) {
+    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceMapper resourceMapper, AreaMapper areaMapper, CategoryMapper categoryMapper) {
         this.resourceRepository = resourceRepository;
+        this.resourceMapper = resourceMapper;
+        this.areaMapper = areaMapper;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
-    public Resource save(Resource resource) {
-        return resourceRepository.save(resource);
+    public ResourceDto save(ResourceDto resourceDto) {
+        Resource resource = resourceRepository.save(resourceMapper.dtoToResource(resourceDto));
+        return resourceMapper.resourceToDto(resource);
     }
 
     @Override
-    public Page<Resource> findAll(Specification<Resource> spec, Pageable pageable) {
-        return resourceRepository.findAll(spec, pageable);
+    public Map<String, Object> findAll(Specification<Resource> spec, Pageable pageable) {
+        Page<Resource> resourceList = resourceRepository.findAll(spec, pageable);
+
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("totalItems", resourceList.getTotalElements());
+        response.put("totalPages", resourceList.getTotalPages());
+        response.put("resources", resourceList.getContent().stream().map(resourceMapper::resourceToDto).collect(Collectors.toList()));
+        response.put("currentPage", resourceList.getNumber());
+
+        return response;
     }
 
     @Override
-    public Resource findOne(UUID resourceId) {
-        return resourceRepository.findById(resourceId).orElseThrow(() -> new NotFoundException("Resource not found with ID: " + resourceId));
+    public ResourceDto findOne(UUID resourceId) {
+        Resource resource = resourceRepository.findById(resourceId).orElseThrow(() -> new NotFoundException("Resource not found with ID: " + resourceId));
+        return resourceMapper.resourceToDto(resource);
     }
 
     @Override
-    public Resource update(UUID resourceId, Resource resource) {
+    public ResourceDto update(UUID resourceId, ResourceDto resourceDto) {
         Resource foundResource = resourceRepository.findById(resourceId).orElseThrow(() -> new NotFoundException("Resource not found with ID: " + resourceId));
 
-        foundResource.setArea(resource.getArea());
-        foundResource.setCategory(resource.getCategory());
-        foundResource.setName(resource.getName());
-        foundResource.setDescription(resource.getDescription());
-        foundResource.setManufactureYear(resource.getManufactureYear());
-        foundResource.setSerialNumber(resource.getSerialNumber());
-        foundResource.setRepairState(resource.getRepairState());
-        foundResource.setResourceNumber(resource.getResourceNumber());
-        foundResource.setStatus(resource.getStatus());
-        foundResource.setObservation(resource.getObservation());
-        foundResource.setUseTime(resource.getUseTime());
+        foundResource.setArea(areaMapper.dtoToArea(resourceDto.area()));
+        foundResource.setCategory(categoryMapper.dtoToCategory(resourceDto.category()));
+        foundResource.setName(resourceDto.name());
+        foundResource.setDescription(resourceDto.description());
+        foundResource.setManufactureYear(resourceDto.manufactureYear());
+        foundResource.setSerialNumber(resourceDto.serialNumber());
+        foundResource.setRepairState(resourceDto.repairState());
+        foundResource.setResourceNumber(resourceDto.resourceNumber());
+        foundResource.setStatus(resourceDto.status());
+        foundResource.setObservation(resourceDto.observation());
+        foundResource.setUseTime(resourceDto.useTime());
 
-        return resourceRepository.save(foundResource);
+        resourceRepository.save(foundResource);
+
+        return resourceMapper.resourceToDto(foundResource);
     }
 
     @Override

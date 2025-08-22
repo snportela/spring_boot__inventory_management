@@ -1,21 +1,22 @@
 package vo.project.inventory.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import vo.project.inventory.domain.Resource;
+import vo.project.inventory.dtos.ResourceDto;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface ResourceService {
 
-    Resource save(Resource resource);
+    ResourceDto save(ResourceDto resourceDto);
 
-    Page<Resource> findAll(Specification<Resource> spec, Pageable pageable);
+    Map<String, Object> findAll(Specification<Resource> spec, Pageable pageable);
 
-    Resource findOne(UUID resourceId);
+    ResourceDto findOne(UUID resourceId);
 
-    Resource update(UUID resourceId, Resource resource);
+    ResourceDto update(UUID resourceId, ResourceDto resourceDto);
 
     void delete(UUID resourceId);
 
