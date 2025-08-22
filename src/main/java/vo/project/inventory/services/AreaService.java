@@ -1,21 +1,22 @@
 package vo.project.inventory.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import vo.project.inventory.domain.Area;
+import vo.project.inventory.dtos.AreaDto;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface AreaService {
 
-    Area save(Area area);
+    AreaDto save(AreaDto areaDto);
 
-    Page<Area> findAll(Specification<Area> spec, Pageable pageable);
+    Map<String, Object> findAll(Specification<Area> spec, Pageable pageable);
 
-    Area findOne(UUID areaId);
+    AreaDto findOne(UUID areaId);
 
-    Area update(UUID areaId, Area area);
+    AreaDto update(UUID areaId, AreaDto areaDto);
 
     void delete(UUID areaId);
 }
