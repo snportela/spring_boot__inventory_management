@@ -7,4 +7,6 @@ import vo.project.inventory.domain.Area;
 import java.util.UUID;
 
 public interface AreaRepository extends JpaRepository<Area, UUID>, JpaSpecificationExecutor<Area> {
+
+    boolean existsAreaByName(String name);
 }
