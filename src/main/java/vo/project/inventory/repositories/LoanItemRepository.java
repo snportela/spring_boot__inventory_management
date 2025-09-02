@@ -28,7 +28,7 @@ public interface LoanItemRepository extends JpaRepository<LoanItem, LoanItemId> 
     void deleteByLoanId(UUID loanId);
 
     @Modifying
-    @Query("UPDATE LoanItem li SET li.deletedAt = CURRENT_TIMESTAMP WHERE li.loanId = :loandId AND li.resourceId = :resourceId AND li.deletedAt IS NULL")
+    @Query("UPDATE LoanItem li SET li.deletedAt = CURRENT_TIMESTAMP WHERE li.loanId = :loanId AND li.resourceId = :resourceId AND li.deletedAt IS NULL")
     void deleteByLoanIdAndResourceId(UUID loanId, UUID resourceId);
 
     @Query("SELECT CASE WHEN COUNT(li) > 0 THEN true ELSE false END FROM LoanItem  li WHERE li.loanId = :loanId AND li.resourceId = :resourceId AND li.deletedAt IS NULL")
