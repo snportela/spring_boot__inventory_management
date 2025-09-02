@@ -49,7 +49,8 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public LoanDto findOne(UUID loanId) {
-        return null;
+        Loan loan = loanRepository.findById(loanId).orElseThrow(() -> new NotFoundException("Could not find Loan with ID: " + loanId));
+        return loanMapper.loanToDto(loan);
     }
 
     @Override
