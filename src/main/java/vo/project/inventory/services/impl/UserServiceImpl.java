@@ -1,5 +1,6 @@
 package vo.project.inventory.services.impl;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,6 +13,8 @@ import vo.project.inventory.exceptions.AlreadyExistsException;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.mappers.UserMapper;
 import vo.project.inventory.repositories.UserRepository;
+import vo.project.inventory.security.services.MailService;
+import vo.project.inventory.security.services.ResetTokenService;
 import vo.project.inventory.services.UserService;
 
 import java.util.HashMap;
@@ -24,13 +27,19 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-
     private final UserMapper userMapper;
+    private final MailService mailService;
+    private final ResetTokenService resetTokenService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, MailService mailService, ResetTokenService resetTokenService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.mailService = mailService;
+        this.resetTokenService = resetTokenService;
     }
+
+    @Value("${host.url}")
+    private String hostUrl;
 
     @Override
     public void register(RegisterDto registerDto) {
@@ -84,5 +93,40 @@ public class UserServiceImpl implements UserService{
     public void delete(UUID userId) {
         userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Could not find User with ID: " + userId));
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public void sendPasswordResetEmail(String email, String token) {
+        String subject = "Password Reset Request";
+        String resetUrl = hostUrl + "reset?token=" + token;
+        String body = "Click the link to reset your password: " + resetUrl;
+
+        mailService.sendEmail(email, subject, body);
+    }
+
+    @Override
+    public void redeemPassword(String email) {
+        User foundUser = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Could not find User with e-mail: " + email));
+        var token = resetTokenService.generateResetToken(foundUser);
+        foundUser.setResetToken(token);
+
+        userRepository.save(foundUser);
+
+        sendPasswordResetEmail(email, token);
+
+    }
+
+    @Override
+    public void resetPassword(String token, String password) {
+        resetTokenService.validateResetToken(token);
+
+        User foundUser = userRepository.findByResetToken(token).orElseThrow(() -> new NotFoundException("Could not find user"));
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(password);
+
+        foundUser.setPassword(encryptedPassword);
+        foundUser.setResetToken(null);
+
+        userRepository.save(foundUser);
     }
 }

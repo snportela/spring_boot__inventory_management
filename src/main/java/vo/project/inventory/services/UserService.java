@@ -20,4 +20,10 @@ public interface UserService {
     UserDto update(UUID userId, UserDto userDto);
 
     void delete(UUID userId);
+
+    void sendPasswordResetEmail(String email, String token);
+
+    void redeemPassword(String email);
+
+    void resetPassword(String token, String password);
 }
