@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vo.project.inventory.dtos.user.UserDto;
+import vo.project.inventory.dtos.user.UserRedeemPasswordDto;
+import vo.project.inventory.dtos.user.UserResetPasswordDto;
 import vo.project.inventory.services.UserService;
 import vo.project.inventory.specifications.UserSpec;
 
@@ -50,6 +52,19 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") UUID userId) {
         userService.delete(userId);
         return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
+    }
+
+    @PostMapping("/redeem-password")
+    public ResponseEntity<String> redeemPassword(@RequestBody UserRedeemPasswordDto userDto) {
+        userService.redeemPassword(userDto.email());
+        return ResponseEntity.status(HttpStatus.OK).body("Sent the redeem password link to your email");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody UserResetPasswordDto userDto) {
+        userService.resetPassword(userDto.token(), userDto.password());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Credentials updated.");
     }
 
 }
