@@ -1,18 +1,25 @@
 package vo.project.inventory.security;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
-public class CorsConfig implements WebMvcConfigurer {
+import java.util.List;
+
+@Component
+public class CorsConfig implements CorsConfigurationSource {
 
     @Value("${host.url}")
     private String url;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(url)
-                .allowedMethods("GET", "POST", "DELETE", "PUT");
+    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(url));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedHeaders(List.of("*"));
+        return config;
     }
 }

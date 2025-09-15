@@ -19,9 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final SecurityFilter securityFilter;
+    private final CorsConfig corsConfig;
 
-    public SecurityConfiguration(SecurityFilter securityFilter) {
+    public SecurityConfiguration(SecurityFilter securityFilter, CorsConfig corsConfig) {
         this.securityFilter = securityFilter;
+        this.corsConfig = corsConfig;
     }
 
     @Bean
@@ -29,6 +31,7 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(c -> c.configurationSource(corsConfig))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
