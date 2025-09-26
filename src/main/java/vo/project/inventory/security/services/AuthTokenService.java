@@ -23,7 +23,7 @@ public class AuthTokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("vo-inventory-api")
-                    .withSubject(String.valueOf(user.getUser().getUserId()))
+                    .withSubject("id: " + user.getUser().getUserId() + "; role: " + user.getUser().getRole())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -38,7 +38,7 @@ public class AuthTokenService {
                     .withIssuer("vo-inventory-api")
                     .build()
                     .verify(token)
-                    .getSubject();
+                    .getSubject().substring(4,40);
         } catch (JWTVerificationException exception) {
             return "";
         }
