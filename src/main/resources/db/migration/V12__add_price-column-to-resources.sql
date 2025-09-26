@@ -1,0 +1,1 @@
+ALTER TABLE resources ADD price decimal(10,2);

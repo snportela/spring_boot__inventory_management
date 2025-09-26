@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.ResourceDto;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.mappers.AreaMapper;
 import vo.project.inventory.mappers.CategoryMapper;
+import vo.project.inventory.mappers.ReceiptMapper;
 import vo.project.inventory.mappers.ResourceMapper;
 import vo.project.inventory.repositories.ResourceRepository;
 import vo.project.inventory.services.ResourceService;
@@ -25,12 +26,14 @@ public class ResourceServiceImpl implements ResourceService {
     private final ResourceMapper resourceMapper;
     private final AreaMapper areaMapper;
     private final CategoryMapper categoryMapper;
+    private final ReceiptMapper receiptMapper;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceMapper resourceMapper, AreaMapper areaMapper, CategoryMapper categoryMapper) {
+    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceMapper resourceMapper, AreaMapper areaMapper, CategoryMapper categoryMapper, ReceiptMapper receiptMapper) {
         this.resourceRepository = resourceRepository;
         this.resourceMapper = resourceMapper;
         this.areaMapper = areaMapper;
         this.categoryMapper = categoryMapper;
+        this.receiptMapper = receiptMapper;
     }
 
     @Override
@@ -65,6 +68,8 @@ public class ResourceServiceImpl implements ResourceService {
 
         foundResource.setArea(areaMapper.dtoToArea(resourceDto.area()));
         foundResource.setCategory(categoryMapper.dtoToCategory(resourceDto.category()));
+        foundResource.setReceipt(receiptMapper.dtoToReceipt(resourceDto.receipt()));
+        foundResource.setPrice(resourceDto.price());
         foundResource.setName(resourceDto.name());
         foundResource.setDescription(resourceDto.description());
         foundResource.setManufactureYear(resourceDto.manufactureYear());

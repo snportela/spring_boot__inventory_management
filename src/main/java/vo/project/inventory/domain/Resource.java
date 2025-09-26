@@ -13,6 +13,7 @@ import vo.project.inventory.domain.enums.RepairState;
 import vo.project.inventory.domain.enums.Status;
 import vo.project.inventory.domain.enums.UseTime;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -38,6 +39,13 @@ public class Resource {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "receipt_id")
+    private Receipt receipt;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
 
     private String name;
 
