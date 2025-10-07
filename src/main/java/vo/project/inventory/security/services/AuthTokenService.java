@@ -38,7 +38,7 @@ public class AuthTokenService {
                     .withIssuer("vo-inventory-api")
                     .build()
                     .verify(token)
-                    .getSubject().substring(4,40);
+                    .getSubject();
         } catch (JWTVerificationException exception) {
             return "";
         }
