@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vo.project.inventory.dtos.user.AuthenticationDto;
-import vo.project.inventory.dtos.user.LoginResponseDto;
-import vo.project.inventory.dtos.user.RegisterDto;
+import vo.project.inventory.dtos.user.*;
 import vo.project.inventory.security.UserDetailsImpl;
 import vo.project.inventory.security.services.AuthTokenService;
 import vo.project.inventory.services.UserService;
@@ -43,5 +41,18 @@ public class AuthenticationController {
     public ResponseEntity<String> register(@RequestBody @Valid RegisterDto registerDto) {
         userService.register(registerDto);
         return ResponseEntity.status(HttpStatus.OK).body("User registered successfully.");
+    }
+
+    @PostMapping("/redeem-password")
+    public ResponseEntity<String> redeemPassword(@RequestBody UserRedeemPasswordDto userDto) {
+        userService.redeemPassword(userDto.email());
+        return ResponseEntity.status(HttpStatus.OK).body("Sent the redeem password link to your email");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody UserResetPasswordDto userDto) {
+        userService.resetPassword(userDto.token(), userDto.password());
+
+        return ResponseEntity.status(HttpStatus.OK).body("Credentials updated.");
     }
 }
