@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.ReceiptDto;
 import vo.project.inventory.services.ReceiptService;
 import vo.project.inventory.specifications.ReceiptSpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,8 +54,12 @@ public class ReceiptController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteReceipt(@PathVariable("id") UUID receiptId) {
+    public ResponseEntity<Object> deleteReceipt(@PathVariable("id") UUID receiptId) {
         receiptService.delete(receiptId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Receipt with ID: " + receiptId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Receipt with ID " + receiptId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

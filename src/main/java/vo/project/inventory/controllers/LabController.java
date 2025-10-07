@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.LabDto;
 import vo.project.inventory.services.LabService;
 import vo.project.inventory.specifications.LabSpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,8 +54,12 @@ public class LabController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLab(@PathVariable("id") UUID labId) {
+    public ResponseEntity<Object> deleteLab(@PathVariable("id") UUID labId) {
         labService.delete(labId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Lab with ID: " + labId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Lab with ID " + labId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

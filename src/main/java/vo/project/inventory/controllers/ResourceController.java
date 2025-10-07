@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.ResourceDto;
 import vo.project.inventory.query_filters.ResourceQueryFilter;
 import vo.project.inventory.services.ResourceService;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,8 +53,12 @@ public class ResourceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteResource(@PathVariable("id") UUID resourceId) {
+    public ResponseEntity<Object> deleteResource(@PathVariable("id") UUID resourceId) {
         resourceService.delete(resourceId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Resource with ID: " + resourceId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Resource with ID " + resourceId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.CategoryDto;
 import vo.project.inventory.services.CategoryService;
 import vo.project.inventory.specifications.CategorySpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,8 +53,11 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable("id") UUID categoryId) {
+    public ResponseEntity<Object> deleteCategory(@PathVariable("id") UUID categoryId) {
         categoryService.delete(categoryId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Category with ID: " + categoryId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Category with ID " + categoryId + " was deleted successfully.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

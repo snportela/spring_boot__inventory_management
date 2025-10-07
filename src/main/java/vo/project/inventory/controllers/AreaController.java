@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.AreaDto;
 import vo.project.inventory.services.AreaService;
 import vo.project.inventory.specifications.AreaSpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,8 +52,12 @@ public class AreaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteArea(@PathVariable("id") UUID areaId) {
+    public ResponseEntity<Object> deleteArea(@PathVariable("id") UUID areaId) {
         areaService.delete(areaId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Area with ID: " + areaId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Area with ID " + areaId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

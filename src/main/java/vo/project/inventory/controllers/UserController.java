@@ -11,6 +11,7 @@ import vo.project.inventory.dtos.user.UserResetPasswordDto;
 import vo.project.inventory.services.UserService;
 import vo.project.inventory.specifications.UserSpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,9 +50,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") UUID userId) {
+    public ResponseEntity<Object> deleteUser(@PathVariable("id") UUID userId) {
         userService.delete(userId);
-        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User deleted successfully");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/redeem-password")

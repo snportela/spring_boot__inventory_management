@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.LoanDto;
 import vo.project.inventory.query_filters.LoanQueryFilter;
 import vo.project.inventory.services.LoanService;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,8 +53,12 @@ public class LoanController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLoan(@PathVariable("id") UUID loanId) {
+    public ResponseEntity<Object> deleteLoan(@PathVariable("id") UUID loanId) {
         loanService.delete(loanId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Loan with ID: " + loanId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Loan with ID " + loanId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

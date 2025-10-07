@@ -8,7 +8,9 @@ import vo.project.inventory.dtos.LoanItemCreateDto;
 import vo.project.inventory.dtos.LoanItemResponseDto;
 import vo.project.inventory.services.LoanItemService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -49,17 +51,26 @@ public class LoanItemController {
     }
 
     @DeleteMapping("/{loanId}/{resourceId}")
-    public ResponseEntity<String> removeItemFromLoan(
+    public ResponseEntity<Object> removeItemFromLoan(
             @PathVariable("loanId") UUID loanId,
             @PathVariable("resourceId") UUID resourceId
     ) {
         loanItemService.removeItemFromLoan(loanId, resourceId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Resource with ID: " + resourceId + " in Loan with ID: " + loanId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Deleted Resource with ID: " + resourceId + " in Loan with ID: " + loanId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
     }
 
     @DeleteMapping("/loan/{loanId}")
-    public ResponseEntity<String> removeAllItemsFromLoan(@PathVariable("loanId") UUID loanId) {
+    public ResponseEntity<Object> removeAllItemsFromLoan(@PathVariable("loanId") UUID loanId) {
         loanItemService.removeAllItemsFromLoan(loanId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted all Resources from Loan with ID: " + loanId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Loan with ID " + loanId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

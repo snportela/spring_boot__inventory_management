@@ -9,6 +9,7 @@ import vo.project.inventory.dtos.AppointmentDto;
 import vo.project.inventory.services.AppointmentService;
 import vo.project.inventory.specifications.AppointmentSpec;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -55,8 +56,12 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAppointment(@PathVariable("id") UUID appointmentId) {
+    public ResponseEntity<Object> deleteAppointment(@PathVariable("id") UUID appointmentId) {
         appointmentService.delete(appointmentId);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted Appointment with ID: " + appointmentId);
+        Map<String, String> response = new HashMap<>();
+
+        response.put("message", "Loan with ID " + appointmentId + " was deleted successfully.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
