@@ -14,6 +14,9 @@ import vo.project.inventory.security.UserDetailsImpl;
 import vo.project.inventory.security.services.AuthTokenService;
 import vo.project.inventory.services.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -38,21 +41,32 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterDto registerDto) {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDto registerDto) {
         userService.register(registerDto);
-        return ResponseEntity.status(HttpStatus.OK).body("User registered successfully.");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User registered successfully.");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/redeem-password")
-    public ResponseEntity<String> redeemPassword(@RequestBody UserRedeemPasswordDto userDto) {
+    public ResponseEntity<Object> redeemPassword(@RequestBody UserRedeemPasswordDto userDto) {
         userService.redeemPassword(userDto.email());
-        return ResponseEntity.status(HttpStatus.OK).body("Sent the redeem password link to your email");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Sent the redeem password link to user email");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody UserResetPasswordDto userDto) {
+    public ResponseEntity<Object> resetPassword(@RequestBody UserResetPasswordDto userDto) {
         userService.resetPassword(userDto.token(), userDto.password());
 
-        return ResponseEntity.status(HttpStatus.OK).body("Credentials updated.");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Password updated.");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
