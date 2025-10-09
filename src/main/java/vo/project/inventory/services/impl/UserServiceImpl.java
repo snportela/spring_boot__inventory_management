@@ -97,9 +97,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void sendPasswordResetEmail(String email, String token) {
-        String subject = "Password Reset Request";
-        String resetUrl = hostUrl + "reset?token=" + token;
-        String body = "Click the link to reset your password: " + resetUrl;
+        String subject = "Redefinição de Senha | Inventário VO";
+        String resetUrl = hostUrl + "/reset-password/" + token;
+        String body = "Entre no link a seguir para redefinir sue senha:  " + resetUrl;
 
         mailService.sendEmail(email, subject, body);
     }
