@@ -40,16 +40,6 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDto(token));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDto registerDto) {
-        userService.register(registerDto);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "User registered successfully.");
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
     @PostMapping("/redeem-password")
     public ResponseEntity<Object> redeemPassword(@RequestBody UserRedeemPasswordDto userDto) {
         userService.redeemPassword(userDto.email());

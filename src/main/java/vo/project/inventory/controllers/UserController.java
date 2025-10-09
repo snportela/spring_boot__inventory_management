@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vo.project.inventory.dtos.user.RegisterDto;
 import vo.project.inventory.dtos.user.UserDto;
 import vo.project.inventory.services.UserService;
 import vo.project.inventory.specifications.UserSpec;
@@ -36,6 +37,16 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable("id") UUID userId) {
         UserDto foundUser = userService.findOne(userId);
         return ResponseEntity.status(HttpStatus.OK).body(foundUser);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDto registerDto) {
+        userService.register(registerDto);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User registered successfully.");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}")
