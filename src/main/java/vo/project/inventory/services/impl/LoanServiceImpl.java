@@ -60,6 +60,7 @@ public class LoanServiceImpl implements LoanService {
         loan.setStudentName(loanDto.studentName());
         loan.setStudentId(loanDto.studentId());
         loan.setLoanDate(loanDto.loanDate());
+        loan.setDueDate(loanDto.dueDate());
         loan.setLoanStatus(loanDto.loanStatus());
         loan.setObservation(loanDto.observation());
 

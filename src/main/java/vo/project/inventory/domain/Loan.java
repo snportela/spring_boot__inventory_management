@@ -37,6 +37,9 @@ public class Loan {
     @Column(name = "loan_date")
     private Instant loanDate;
 
+    @Column(name = "due_date")
+    private Instant dueDate;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "loan_status")
     private LoanStatus loanStatus;

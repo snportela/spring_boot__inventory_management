@@ -21,6 +21,9 @@ public record LoanDto(
         @NotNull(message = "Loan Date is required")
         Instant loanDate,
 
+        @NotNull(message = "Due Date is required")
+        Instant dueDate,
+
         @NotNull(message = "Loan Status is required")
         LoanStatus loanStatus,
 
