@@ -34,8 +34,8 @@ public class SecurityConfiguration {
                 .cors(c -> c.configurationSource(corsConfig))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
                         .requestMatchers( "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/").hasRole("USER")
                         .requestMatchers( HttpMethod.POST,"/api/users/redeem-password").permitAll()
                         .requestMatchers( HttpMethod.POST,"/api/users/reset-password").permitAll()
                         .anyRequest().authenticated()
