@@ -1,0 +1,1 @@
+ALTER TABLE receipts ADD access_key varchar(255);

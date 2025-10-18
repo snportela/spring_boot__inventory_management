@@ -32,6 +32,9 @@ public class Receipt {
     @Column(name = "receipt_number")
     private String receiptNumber;
 
+    @Column(name = "access_key")
+    private String accessKey;
+
     @Column(scale = 10, precision = 2)
     private BigDecimal price;
 

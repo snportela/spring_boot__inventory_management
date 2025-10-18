@@ -15,6 +15,8 @@ public record ReceiptDto(
         @Size(min = 2, max = 100, message = "Receipt Number must be between 2 and 100 characters long")
         String receiptNumber,
 
+        String accessKey,
+
         @NotNull(message = "Receipt Price is required")
         BigDecimal price,
 

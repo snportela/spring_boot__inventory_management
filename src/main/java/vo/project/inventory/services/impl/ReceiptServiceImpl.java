@@ -58,6 +58,7 @@ public class ReceiptServiceImpl implements ReceiptService {
         Receipt foundReceipt = receiptRepository.findById(receiptId).orElseThrow(() -> new NotFoundException("Receipt not found with ID: " + receiptId));
 
         foundReceipt.setReceiptNumber(receiptDto.receiptNumber());
+        foundReceipt.setAccessKey(receiptDto.accessKey());
         foundReceipt.setPrice(receiptDto.price());
         foundReceipt.setSupplier(receiptDto.supplier());
         foundReceipt.setReceiptDate(receiptDto.receiptDate());
