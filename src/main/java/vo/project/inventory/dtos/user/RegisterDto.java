@@ -17,7 +17,7 @@ public record RegisterDto(
         String email,
 
         @NotNull(message = "User Password is required")
-        @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{10,}$", message = "Password must contain at least one uppercase and lowercase character, a number and a special character")
+        @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@!#$%^&+=])(?=\\S+$).{10,}$", message = "Password must contain at least one uppercase and lowercase character, a number and a special character")
         String password,
 
         @NotNull(message = "User Role is required")
