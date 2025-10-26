@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vo.project.inventory.domain.Receipt;
 import vo.project.inventory.dtos.ReceiptDto;
+import vo.project.inventory.exceptions.AlreadyExistsException;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.mappers.ReceiptMapper;
 import vo.project.inventory.repositories.ReceiptRepository;
@@ -29,6 +30,9 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     @Override
     public ReceiptDto save(ReceiptDto receiptDto) {
+        if(receiptRepository.existsReceiptByReceiptNumber(receiptDto.receiptNumber())) {
+            throw new AlreadyExistsException("A Receipt with this number already exists.");
+        }
         Receipt receipt = receiptRepository.save(receiptMapper.dtoToReceipt(receiptDto));
         return receiptMapper.receiptToDto(receipt);
     }
@@ -55,6 +59,10 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     @Override
     public ReceiptDto update(UUID receiptId, ReceiptDto receiptDto) {
+        if(receiptRepository.existsReceiptByReceiptNumber(receiptDto.receiptNumber())) {
+            throw new AlreadyExistsException("A Receipt with this number already exists.");
+        }
+
         Receipt foundReceipt = receiptRepository.findById(receiptId).orElseThrow(() -> new NotFoundException("Receipt not found with ID: " + receiptId));
 
         foundReceipt.setReceiptNumber(receiptDto.receiptNumber());
