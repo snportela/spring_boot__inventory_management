@@ -7,4 +7,8 @@ import vo.project.inventory.domain.Resource;
 import java.util.UUID;
 
 public interface ResourceRepository extends JpaRepository<Resource, UUID>, JpaSpecificationExecutor<Resource> {
+    
+    boolean existsResourceByName(String name);
+    
+    boolean existsResourceByResourceNumber(String resourceNumber);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vo.project.inventory.domain.Resource;
 import vo.project.inventory.dtos.ResourceDto;
+import vo.project.inventory.exceptions.AlreadyExistsException;
 import vo.project.inventory.exceptions.NotFoundException;
 import vo.project.inventory.mappers.AreaMapper;
 import vo.project.inventory.mappers.CategoryMapper;
@@ -38,6 +39,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public ResourceDto save(ResourceDto resourceDto) {
+        if(resourceRepository.existsResourceByName(resourceDto.name())) {
+            throw new AlreadyExistsException("An Resource with this name already exists.");
+        }
+
+        if(resourceRepository.existsResourceByResourceNumber(resourceDto.resourceNumber())) {
+            throw new AlreadyExistsException("An Resource with this number already exists");
+        }
+
         Resource resource = resourceRepository.save(resourceMapper.dtoToResource(resourceDto));
         return resourceMapper.resourceToDto(resource);
     }
@@ -64,6 +73,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public ResourceDto update(UUID resourceId, ResourceDto resourceDto) {
+        if(resourceRepository.existsResourceByName(resourceDto.name())) {
+            throw new AlreadyExistsException("An Resource with this name already exists.");
+        }
+
+        if(resourceRepository.existsResourceByResourceNumber(resourceDto.resourceNumber())) {
+            throw new AlreadyExistsException("An Resource with this number already exists");
+        }
+
         Resource foundResource = resourceRepository.findById(resourceId).orElseThrow(() -> new NotFoundException("Resource not found with ID: " + resourceId));
 
         foundResource.setArea(areaMapper.dtoToArea(resourceDto.area()));
