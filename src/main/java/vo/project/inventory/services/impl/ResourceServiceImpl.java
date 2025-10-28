@@ -17,6 +17,7 @@ import vo.project.inventory.services.ResourceService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -73,11 +74,15 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public ResourceDto update(UUID resourceId, ResourceDto resourceDto) {
-        if(resourceRepository.existsResourceByName(resourceDto.name())) {
+
+        Optional<Resource> duplicateName = resourceRepository.findResourceByName(resourceDto.name());
+        Optional<Resource> duplicateNumber = resourceRepository.findResourceByResourceNumber(resourceDto.resourceNumber());
+
+        if(duplicateName.isPresent() && !duplicateName.get().getResourceId().equals(resourceId)) {
             throw new AlreadyExistsException("An Resource with this name already exists.");
         }
 
-        if(resourceRepository.existsResourceByResourceNumber(resourceDto.resourceNumber())) {
+        if(duplicateNumber.isPresent() && !duplicateNumber.get().getResourceId().equals(resourceId)) {
             throw new AlreadyExistsException("An Resource with this number already exists");
         }
 

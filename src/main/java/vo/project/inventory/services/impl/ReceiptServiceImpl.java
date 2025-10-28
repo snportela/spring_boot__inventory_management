@@ -14,6 +14,7 @@ import vo.project.inventory.services.ReceiptService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -59,7 +60,9 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     @Override
     public ReceiptDto update(UUID receiptId, ReceiptDto receiptDto) {
-        if(receiptRepository.existsReceiptByReceiptNumber(receiptDto.receiptNumber())) {
+        Optional<Receipt> duplicate = receiptRepository.findReceiptByReceiptNumber(receiptDto.receiptNumber());
+
+        if(duplicate.isPresent() && !duplicate.get().getReceiptId().equals(receiptId)) {
             throw new AlreadyExistsException("A Receipt with this number already exists.");
         }
 
