@@ -2,7 +2,6 @@ package vo.project.inventory.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import vo.project.inventory.domain.enums.RepairState;
 import vo.project.inventory.domain.enums.Status;
@@ -32,7 +31,6 @@ public record ResourceDto(
         @NotBlank(message = "Resource description is required")
         String description,
 
-        @Pattern(regexp = "^(?:\\d{4}|[Nn]/[Aa])$", message = "Input must be a valid year format or 'N/A'.")
         String manufactureYear,
 
         String serialNumber,
