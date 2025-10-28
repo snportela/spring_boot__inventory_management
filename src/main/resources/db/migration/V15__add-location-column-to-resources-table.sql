@@ -1,0 +1,1 @@
+ALTER TABLE resources ADD location varchar(100);

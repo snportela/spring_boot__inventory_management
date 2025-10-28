@@ -72,6 +72,8 @@ public class Resource {
     @Enumerated(EnumType.STRING)
     private UseTime useTime;
 
+    private String location;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;

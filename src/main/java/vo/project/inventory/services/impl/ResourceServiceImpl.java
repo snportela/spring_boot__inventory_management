@@ -96,6 +96,7 @@ public class ResourceServiceImpl implements ResourceService {
         foundResource.setStatus(resourceDto.status());
         foundResource.setObservation(resourceDto.observation());
         foundResource.setUseTime(resourceDto.useTime());
+        foundResource.setLocation(resourceDto.location());
 
         resourceRepository.save(foundResource);
 

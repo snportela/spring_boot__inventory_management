@@ -46,6 +46,8 @@ public record ResourceDto(
         String observation,
 
         @NotNull(message = "Resource use time is required")
-        UseTime useTime
+        UseTime useTime,
+
+        String location
 ) {
 }
