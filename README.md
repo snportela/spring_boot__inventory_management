@@ -67,14 +67,14 @@ The API provides the following main endpoints:
 3.  **Environment Variables:**
   -   Configure the environment variables. You can set them in your IDE or create an `application.properties` file in `src/main/resources/`.
   -   The following variables are required (see `application.properties` for details):
-    -   `DB_URL`: The full JDBC URL for your PostgreSQL database.
-    -   `DB_USER`: Database username.
-    -   `DB_PASSWORD`: Database password.
-    -   `JWT_SECRET`: A secret key for signing JWT tokens.
-    -   `RESET_SECRET`: A secret key for signing password reset tokens.
-    -   `MAIL_USERNAME`: Gmail account for sending emails.
-    -   `MAIL_PASSWORD`: Gmail App Password (not your regular password).
-    -   `HOST_URL`: The base URL of your frontend application (for the password reset link).
+        -   `DB_URL`: The full JDBC URL for your PostgreSQL database.
+        -   `DB_USER`: Database username.
+        -   `DB_PASSWORD`: Database password.
+        -   `JWT_SECRET`: A secret key for signing JWT tokens.
+        -   `RESET_SECRET`: A secret key for signing password reset tokens.
+        -   `MAIL_USERNAME`: Gmail account for sending emails.
+        -   `MAIL_PASSWORD`: Gmail App Password (not your regular password).
+        -   `HOST_URL`: The base URL of your frontend application (for the password reset link).
 
 4.  **Install Dependencies and Run:**
   -   The project uses the Maven wrapper.
