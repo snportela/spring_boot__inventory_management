@@ -123,8 +123,6 @@ You can also build and run the application using the provided `Dockerfile`.
 
 # <a name="portugues"></a>API de Sistema de Gerenciamento de Inventário 🧾
 
-![JAVA__BADGE] ![SPRING__BADGE] ![MAVEN__BADGE] ![POSTGRES__BADGE]
-
 API REST em Spring Boot para gerenciamento de inventário, empréstimos e agendamentos em laboratórios universitários.
 
 ## 💻 Tecnologias
