@@ -11,9 +11,12 @@
 Spring Boot REST API for managing inventory, loans and appointments in university labs.
 
 Authors: 
-Kayke Lavieri Leite
-Rafael de Melo Santiago
-Shams Ameer Ali Ali Aumraan
+Kayke Lavieri Leite,
+
+Rafael de Melo Santiago,
+
+Shams Ameer Ali Ali Aumraan,
+
 Sophia Nobre Portela
 
 ## 💻Technologies
